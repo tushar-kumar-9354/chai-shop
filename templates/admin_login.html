@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Login - Chai Wala{% endblock %}
+
+{% block extra_css %}
+<style>
+.login-page {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.login-container {
+    background: linear-gradient(145deg, #2d1810 0%, #1a0a00 100%);
+    border: 2px solid #3d2817;
+    border-radius: 30px;
+    padding: 3rem;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+.login-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.login-container h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #f5deb3;
+    margin-bottom: 0.5rem;
+}
+
+.login-container h1 span {
+    color: #d4a574;
+}
+
+.login-container > p {
+    color: #a89078;
+    margin-bottom: 2rem;
+}
+
+.error-msg {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    color: #d4a574;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-family: 'Fredoka', sans-serif;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(245, 222, 179, 0.05);
+    border: 2px solid #3d2817;
+    border-radius: 12px;
+    color: #f5deb3;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input::placeholder {
+    color: #6d5d4d;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #d4a574;
+    background: rgba(245, 222, 179, 0.1);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, #d4a574 0%, #c4956a 100%);
+    color: #1a0a00;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 165, 116, 0.4);
+}
+
+.login-info {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(139, 90, 43, 0.2);
+}
+
+.login-info p {
+    color: #a89078;
+    font-size: 0.9rem;
+}
+
+.login-info a {
+    color: #d4a574;
+    text-decoration: none;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-page">
+    <div class="login-container">
+        <div class="login-icon">🔐</div>
+        <h1>Admin <span>Login</span></h1>
+        <p>Access the Chai Wala management panel</p>
+
+        {% if error %}
+        <div class="error-msg">{{ error }}</div>
+        {% endif %}
+
+        <form class="login-form" method="POST">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter admin username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password" required>
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+
+        <div class="login-info">
+            <p><a href="/login">← Back to Customer Login</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

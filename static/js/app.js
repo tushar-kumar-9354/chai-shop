@@ -47,7 +47,7 @@ async function fetchCartItems() {
 // Render cart items in modal
 function renderCartItems(data) {
     const container = document.getElementById('cartItems');
-    const totalEl = document.getElementById('cartTotal');
+    const footer = document.getElementById('cartFooter');
 
     if (data.items.length === 0) {
         container.innerHTML = `
@@ -57,14 +57,16 @@ function renderCartItems(data) {
                 <p style="font-size: 0.9rem; margin-top: 0.5rem;">Add some delicious chai to get started!</p>
             </div>
         `;
-        totalEl.textContent = '₹0';
+        footer.innerHTML = `
+            <button class="checkout-btn" disabled>Checkout</button>
+        `;
         return;
     }
 
     container.innerHTML = data.items.map(item => `
         <div class="cart-item">
             <div class="cart-item-image">
-                <img src="https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=150" alt="${item.name}">
+                <img src="${item.image || 'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=150'}" alt="${item.name}">
             </div>
             <div class="cart-item-details">
                 <h4>${item.name}</h4>
@@ -79,7 +81,51 @@ function renderCartItems(data) {
         </div>
     `).join('');
 
-    totalEl.textContent = '₹' + data.total;
+    footer.innerHTML = `
+        <div class="cart-total">
+            <span>Total:</span>
+            <span id="cartTotal">₹${data.total}</span>
+        </div>
+        <form id="checkoutForm" onsubmit="placeOrder(event)">
+            <div class="checkout-form-group">
+                <input type="text" id="deliveryAddress" placeholder="Delivery address (optional)" class="checkout-input">
+            </div>
+            <button type="submit" class="checkout-btn">Place Order</button>
+        </form>
+        <button class="clear-cart-btn" onclick="clearCart()">Clear Cart</button>
+    `;
+}
+
+// Place order
+async function placeOrder(event) {
+    event.preventDefault();
+
+    const deliveryAddress = document.getElementById('deliveryAddress').value;
+
+    try {
+        const res = await fetch('/api/orders', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ delivery_address: deliveryAddress })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            showToast(`Order placed! Order ID: ${data.order_id}`, 'success');
+            closeCart();
+            updateCartCount();
+
+            // Redirect to orders page after 2 seconds
+            setTimeout(() => {
+                window.location.href = '/orders';
+            }, 2000);
+        } else {
+            showToast(data.error || 'Failed to place order', 'error');
+        }
+    } catch (e) {
+        showToast('Failed to place order', 'error');
+    }
 }
 
 // Add item to cart
@@ -151,20 +197,17 @@ async function clearCart() {
     }
 }
 
-// Checkout
-function checkout() {
-    showToast('Order placed successfully! Thank you! 🎉', 'success');
-    clearCart();
-    setTimeout(() => {
-        closeCart();
-    }, 1500);
+// Logout
+function logout() {
+    window.location.href = '/logout';
 }
 
 // Toast notification system
 function showToast(message, type = 'success') {
-    let container = document.querySelector('.toast-container');
+    let container = document.getElementById('toastContainer');
     if (!container) {
         container = document.createElement('div');
+        container.id = 'toastContainer';
         container.className = 'toast-container';
         document.body.appendChild(container);
     }
@@ -172,7 +215,7 @@ function showToast(message, type = 'success') {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     toast.innerHTML = `
-        <span class="toast-icon">${type === 'success' ? '✓' : '✕'}</span>
+        <span class="toast-icon">${type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ'}</span>
         <span class="toast-message">${message}</span>
     `;
 

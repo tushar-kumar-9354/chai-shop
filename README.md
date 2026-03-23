@@ -1,18 +1,28 @@
 # Chai Wala ☕
 
-A beautiful Flask web application for an authentic Indian chai shop with a rich, warm design aesthetic.
+A beautiful Flask web application for an authentic Indian chai shop with user accounts, order tracking, and admin panel.
 
 ![Chai Wala](https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=800)
 
 ## Features
 
+### Customer Features
 - **Multiple Pages**: Home, Menu, About, Contact
+- **User Login**: Customers can login with name and phone number
 - **Pre-loaded Menu**: 12 authentic chai varieties with descriptions and prices
 - **Shopping Cart**: Add, remove, update quantities with session-based storage
+- **Order Placement**: Place orders with delivery address
+- **Order Tracking**: Track all your orders and see their current status
 - **Category Filtering**: Filter chai by Classic, Premium, Fusion, or Herbal
 - **Quick View Modal**: See detailed item information before adding to cart
 - **Responsive Design**: Works beautifully on mobile and desktop
-- **Warm Chai Theme**: Rich brown/golden color palette with steam animations
+
+### Admin Features
+- **Admin Login**: Secure admin access (username: `admin`, password: `chaiadmin123`)
+- **Dashboard**: View order statistics by status
+- **Order Management**: View all orders, update status, delete orders
+- **Status Updates**: Change order status (Pending → Confirmed → Preparing → Ready → Delivered)
+- **Menu Overview**: View all menu items in admin panel
 
 ## Chai Menu
 
@@ -35,8 +45,8 @@ A beautiful Flask web application for an authentic Indian chai shop with a rich,
 
 1. **Clone the repository**
 ```bash
-git clone <your-repo-url>
-cd chai_shop
+git clone https://github.com/tushar-kumar-9354/chai-shop.git
+cd chai-shop
 ```
 
 2. **Create virtual environment**
@@ -58,12 +68,37 @@ python app.py
 5. **Open in browser**
 Navigate to `http://localhost:5000`
 
+## Admin Access
+
+- **URL**: `http://localhost:5000/admin/login`
+- **Username**: `admin`
+- **Password**: `chaiadmin123`
+
+## Pages
+
+- `/` - Home page with featured chai
+- `/menu` - Full menu with category filters
+- `/about` - About our chai story
+- `/contact` - Contact form
+- `/login` - Customer login
+- `/orders` - Track your orders (requires login)
+- `/admin` - Admin panel (requires admin login)
+
+## Tech Stack
+
+- **Backend**: Flask (Python)
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript
+- **Data Storage**: JSON file (orders.json)
+- **Fonts**: Fredoka, Playfair Display (Google Fonts)
+- **Images**: Unsplash CDN
+
 ## Project Structure
 
 ```
 chai_shop/
 ├── app.py              # Flask application with routes
 ├── requirements.txt    # Python dependencies
+├── orders.json          # Order data storage
 ├── static/
 │   ├── css/
 │   │   └── style.css   # Global styles
@@ -74,29 +109,12 @@ chai_shop/
     ├── home.html       # Home page
     ├── menu.html       # Menu page
     ├── about.html      # About page
-    └── contact.html    # Contact page
+    ├── contact.html    # Contact page
+    ├── login.html      # Customer login
+    ├── orders.html     # Order tracking
+    ├── admin.html      # Admin panel
+    └── admin_login.html # Admin login
 ```
-
-## Deploy to GitHub
-
-1. Create a new repository on GitHub
-2. Initialize git and push:
-```bash
-cd chai_shop
-git init
-git add .
-git commit -m "Initial commit - Chai Wala Flask app"
-git branch -M main
-git remote add origin <your-github-repo-url>
-git push -u origin main
-```
-
-## Tech Stack
-
-- **Backend**: Flask (Python)
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript
-- **Fonts**: Fredoka, Playfair Display (Google Fonts)
-- **Images**: Unsplash CDN
 
 ## License
 

@@ -113,6 +113,44 @@ main {
     width: 100%;
 }
 
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-link {
+    color: #a89078;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #d4a574;
+}
+
+.admin-link {
+    padding: 0.5rem 1rem;
+    background: rgba(212, 165, 116, 0.1);
+    border: 1px solid #d4a574;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+.login-link {
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #d4a574 0%, #c4956a 100%);
+    color: #1a0a00 !important;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.login-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 165, 116, 0.3);
+}
+
 .cart-btn {
     display: flex;
     align-items: center;
@@ -145,6 +183,33 @@ main {
     justify-content: center;
     font-weight: 600;
     font-size: 0.85rem;
+}
+
+.user-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(74, 222, 128, 0.1);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.user-btn:hover {
+    background: rgba(74, 222, 128, 0.2);
+    border-color: #4ade80;
+}
+
+.user-icon {
+    font-size: 1rem;
+}
+
+.user-name {
+    color: #4ade80;
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .mobile-menu-btn {
@@ -366,6 +431,32 @@ main {
 
 .clear-cart-btn:hover {
     background: rgba(239, 68, 68, 0.1);
+}
+
+.checkout-form-group {
+    margin-bottom: 1rem;
+}
+
+.checkout-input {
+    width: 100%;
+    padding: 0.8rem;
+    background: rgba(245, 222, 179, 0.05);
+    border: 2px solid #3d2817;
+    border-radius: 10px;
+    color: #f5deb3;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.checkout-input::placeholder {
+    color: #6d5d4d;
+}
+
+.checkout-input:focus {
+    outline: none;
+    border-color: #d4a574;
+    background: rgba(245, 222, 179, 0.1);
 }
 
 /* Footer */

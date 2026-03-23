@@ -25,10 +25,26 @@
                 <li><a href="/menu" class="{% if request.path == '/menu' %}active{% endif %}">Menu</a></li>
                 <li><a href="/about" class="{% if request.path == '/about' %}active{% endif %}">About</a></li>
                 <li><a href="/contact" class="{% if request.path == '/contact' %}active{% endif %}">Contact</a></li>
+                {% if session.get('customer_name') %}
+                <li><a href="/orders" class="{% if request.path == '/orders' %}active{% endif %}">My Orders</a></li>
+                {% endif %}
             </ul>
-            <div class="cart-btn" onclick="openCart()">
-                <span class="cart-icon">🛒</span>
-                <span class="cart-count" id="cartCount">0</span>
+            <div class="nav-right">
+                {% if session.get('admin_logged_in') %}
+                <a href="/admin" class="nav-link admin-link">Admin</a>
+                {% endif %}
+                <div class="cart-btn" onclick="openCart()">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+                {% if session.get('customer_name') %}
+                <div class="user-btn" onclick="logout()">
+                    <span class="user-icon">👤</span>
+                    <span class="user-name">{{ session.get('customer_name')[:10] }}</span>
+                </div>
+                {% else %}
+                <a href="/login" class="nav-link login-link">Login</a>
+                {% endif %}
             </div>
         </div>
     </nav>
@@ -59,10 +75,14 @@
                 <a href="/menu?category=herbal">Herbal Chai</a>
             </div>
             <div class="footer-links">
-                <h4>Follow Us</h4>
-                <a href="#">Instagram</a>
-                <a href="#">Facebook</a>
-                <a href="#">Twitter</a>
+                <h4>Account</h4>
+                {% if session.get('customer_name') %}
+                <a href="/orders">My Orders</a>
+                <a href="/logout">Logout</a>
+                {% else %}
+                <a href="/login">Login</a>
+                {% endif %}
+                <a href="/admin/login">Admin</a>
             </div>
         </div>
         <div class="footer-bottom">
@@ -80,16 +100,14 @@
             <div class="cart-items" id="cartItems">
                 <!-- Cart items will be loaded here -->
             </div>
-            <div class="cart-footer">
-                <div class="cart-total">
-                    <span>Total:</span>
-                    <span id="cartTotal">₹0</span>
-                </div>
-                <button class="checkout-btn" onclick="checkout()">Place Order</button>
-                <button class="clear-cart-btn" onclick="clearCart()">Clear Cart</button>
+            <div class="cart-footer" id="cartFooter">
+                <!-- Checkout form will be here -->
             </div>
         </div>
     </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
 
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
     {% block extra_js %}{% endblock %}

@@ -205,7 +205,7 @@ def place_order():
         'customer_name': customer_name,
         'customer_phone': customer_phone,
         'delivery_address': delivery_address,
-        'items': order_items,
+        'order_items': order_items,
         'total': total,
         'status': 'pending',
         'created_at': datetime.now().isoformat(),

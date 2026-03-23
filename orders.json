@@ -1,0 +1,35 @@
+[
+  {
+    "order_id": "ORD-20260323175400",
+    "customer_name": "TUSHAR KUMAR",
+    "customer_phone": "9876541230",
+    "delivery_address": "",
+    "items": [
+      {
+        "id": 1,
+        "name": "Masala Chai",
+        "price": 30,
+        "quantity": 4,
+        "subtotal": 120
+      },
+      {
+        "id": 2,
+        "name": "Adrak Chai",
+        "price": 25,
+        "quantity": 1,
+        "subtotal": 25
+      },
+      {
+        "id": 3,
+        "name": "Elaichi Chai",
+        "price": 35,
+        "quantity": 1,
+        "subtotal": 35
+      }
+    ],
+    "total": 180,
+    "status": "pending",
+    "created_at": "2026-03-23T17:54:00.959617",
+    "updated_at": "2026-03-23T17:54:00.959617"
+  }
+]

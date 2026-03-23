@@ -566,10 +566,10 @@
                         <td data-label="Customer">{{ order.customer_name }}</td>
                         <td data-label="Phone">{{ order.customer_phone }}</td>
                         <td data-label="Items" class="order-items-preview">
-                            {% for item in order.items[:2] %}
+                            {% for item in order.order_items[:2] %}
                             <span>{{ item.name }} × {{ item.quantity }}</span>{% if not loop.last %}, {% endif %}
                             {% endfor %}
-                            {% if order.items|length > 2 %} +{{ order.items|length - 2 }} more{% endif %}
+                            {% if order.order_items|length > 2 %} +{{ order.order_items|length - 2 }} more{% endif %}
                         </td>
                         <td data-label="Total">₹{{ order.total }}</td>
                         <td data-label="Status">
@@ -706,7 +706,7 @@ function viewOrder(orderId) {
         ` : ''}
         <div class="detail-items">
             <h4 style="color: #d4a574; margin-bottom: 0.75rem;">Items</h4>
-            ${order.items.map(item => `
+            ${order.order_items.map(item => `
                 <div class="detail-item">
                     <span class="detail-item-name">☕ ${item.name} × ${item.quantity}</span>
                     <span class="detail-item-price">₹${item.subtotal}</span>

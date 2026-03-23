@@ -12,7 +12,16 @@ ORDERS_FILE = 'orders.json'
 def load_orders():
     if os.path.exists(ORDERS_FILE):
         with open(ORDERS_FILE, 'r') as f:
-            return json.load(f)
+            orders = json.load(f)
+        # Migrate old orders with 'items' key to 'order_items'
+        migrated = False
+        for order in orders:
+            if 'items' in order and 'order_items' not in order:
+                order['order_items'] = order.pop('items')
+                migrated = True
+        if migrated:
+            save_orders(orders)
+        return orders
     return []
 
 def save_orders(orders):

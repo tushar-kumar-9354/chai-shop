@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - Chai Wala{% endblock %}
+
+{% block extra_css %}
+<style>
+.about-page {
+    min-height: calc(100vh - 200px);
+}
+
+.about-hero {
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #1a0a00 0%, #2d1810 50%, #1a0a00 100%);
+    text-align: center;
+}
+
+.about-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: #f5deb3;
+    margin-bottom: 1rem;
+}
+
+.about-hero h1 span {
+    color: #d4a574;
+}
+
+.about-hero p {
+    color: #a89078;
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.8;
+}
+
+.about-content {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.story-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-bottom: 4rem;
+}
+
+.story-image {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.story-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+.story-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #f5deb3;
+    margin-bottom: 1.5rem;
+}
+
+.story-text h2 span {
+    color: #d4a574;
+}
+
+.story-text p {
+    color: #a89078;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.value-card {
+    background: linear-gradient(145deg, #2d1810 0%, #1a0a00 100%);
+    border: 2px solid #3d2817;
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.value-card:hover {
+    border-color: #d4a574;
+    transform: translateY(-5px);
+}
+
+.value-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.value-card h3 {
+    font-family: 'Fredoka', sans-serif;
+    color: #f5deb3;
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+}
+
+.value-card p {
+    color: #a89078;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .story-section {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .about-hero h1 {
+        font-size: 2rem;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="about-page">
+    <section class="about-hero">
+        <h1>Our <span>Chai</span> Story</h1>
+        <p>From the bustling streets of India to your cup, we bring you the authentic taste of traditional chai, crafted with passion and served with love.</p>
+    </section>
+
+    <section class="about-content">
+        <div class="story-section">
+            <div class="story-image">
+                <img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=600" alt="Chai brewing tradition">
+            </div>
+            <div class="story-text">
+                <h2>Born from <span>Tradition</span></h2>
+                <p>Chai Wala started as a small stall on the streets of Mumbai, where our founder first learned the art of brewing the perfect cup of chai from his grandfather.</p>
+                <p>After 20 years of perfecting recipes and sourcing the finest ingredients from across India, we decided to share our passion with the world.</p>
+                <p>Every cup we serve carries the warmth of Indian hospitality and the authenticity of generations of chai-making tradition.</p>
+            </div>
+        </div>
+
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">🍃</div>
+                <h3>Fresh Ingredients</h3>
+                <p>We source our tea leaves from the finest estates in Assam and Darjeeling, and our spices are ground fresh daily.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">👨‍🍳</div>
+                <h3>Master Craftsmanship</h3>
+                <p>Our chai masters train for years to perfect the art of brewing - each cup is a masterpiece.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">❤️</div>
+                <h3>Made with Love</h3>
+                <p>Every cup is prepared with care and served with a smile, following the Indian tradition of hospitality.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🌿</div>
+                <h3>Natural & Pure</h3>
+                <p>No artificial flavors, no preservatives - just pure, natural ingredients that nature gave us.</p>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

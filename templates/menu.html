@@ -1,0 +1,443 @@
+{% extends "base.html" %}
+
+{% block title %}Menu - Chai Wala{% endblock %}
+
+{% block extra_css %}
+<style>
+.menu-page {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: calc(100vh - 200px);
+}
+
+.menu-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.menu-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: #f5deb3;
+    margin-bottom: 1rem;
+}
+
+.menu-header h1 span {
+    color: #d4a574;
+}
+
+.category-filters {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+.filter-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #8b5a2b;
+    background: transparent;
+    color: #d4a574;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: linear-gradient(135deg, #d4a574 0%, #c4956a 100%);
+    color: #1a0a00;
+    border-color: #d4a574;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.menu-card {
+    background: linear-gradient(145deg, #2d1810 0%, #1a0a00 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 2px solid #3d2817;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.menu-card:hover {
+    transform: translateY(-5px);
+    border-color: #d4a574;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.menu-card-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.menu-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.menu-card:hover .menu-card-image img {
+    transform: scale(1.1);
+}
+
+.category-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.category-badge.classic {
+    background: #d4a574;
+    color: #1a0a00;
+}
+
+.category-badge.premium {
+    background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+    color: #1a0a00;
+}
+
+.category-badge.fusion {
+    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+    color: white;
+}
+
+.category-badge.herbal {
+    background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+    color: #1a0a00;
+}
+
+.menu-card-content {
+    padding: 1.5rem;
+}
+
+.menu-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+}
+
+.menu-card-header h3 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.4rem;
+    color: #f5deb3;
+    margin: 0;
+}
+
+.rating {
+    background: rgba(212, 165, 116, 0.2);
+    padding: 0.3rem 0.6rem;
+    border-radius: 8px;
+    color: #d4a574;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.menu-card-desc {
+    color: #a89078;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.menu-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.5rem;
+    color: #d4a574;
+    font-weight: 700;
+}
+
+.add-to-cart-btn {
+    padding: 0.6rem 1.5rem;
+    background: linear-gradient(135deg, #d4a574 0%, #c4956a 100%);
+    color: #1a0a00;
+    border: none;
+    border-radius: 25px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(212, 165, 116, 0.4);
+}
+
+.add-to-cart-btn.added {
+    background: #4ade80;
+}
+
+/* Quick view modal */
+.quick-view-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.quick-view-modal.active {
+    display: flex;
+}
+
+.quick-view-content {
+    background: linear-gradient(145deg, #2d1810 0%, #1a0a00 100%);
+    border-radius: 20px;
+    max-width: 500px;
+    width: 90%;
+    overflow: hidden;
+    border: 2px solid #d4a574;
+}
+
+.quick-view-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.quick-view-details {
+    padding: 2rem;
+}
+
+.quick-view-details h2 {
+    font-family: 'Fredoka', sans-serif;
+    color: #f5deb3;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.quick-view-details .rating {
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.quick-view-details .price {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.quick-view-details p {
+    color: #a89078;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.quick-view-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(212, 165, 116, 0.1);
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+
+.quantity-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: #d4a574;
+    color: #1a0a00;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.quantity-btn:hover {
+    background: #e0b88a;
+}
+
+.quantity-value {
+    width: 40px;
+    text-align: center;
+    color: #f5deb3;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.close-quick-view {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .menu-header h1 {
+        font-size: 2rem;
+    }
+
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="menu-page">
+    <div class="menu-header">
+        <h1>Our <span>Chai</span> Menu</h1>
+        <p style="color: #a89078;">Handcrafted with love, served with tradition</p>
+        <div class="category-filters">
+            {% for cat in categories %}
+            <button class="filter-btn {% if cat == current_category %}active{% endif %}"
+                    onclick="filterMenu('{{ cat }}')">
+                {{ cat|title }}
+            </button>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="menu-grid" id="menuGrid">
+        {% for item in menu_items %}
+        <div class="menu-card" onclick="openQuickView({{ item.id }}, '{{ item.name }}', {{ item.price }}, '{{ item.description }}', '{{ item.image }}', {{ item.rating }}, '{{ item.category }}')">
+            <div class="menu-card-image">
+                <img src="{{ item.image }}" alt="{{ item.name }}" loading="lazy">
+                <span class="category-badge {{ item.category }}">{{ item.category }}</span>
+            </div>
+            <div class="menu-card-content">
+                <div class="menu-card-header">
+                    <h3>{{ item.name }}</h3>
+                    <div class="rating">★ {{ item.rating }}</div>
+                </div>
+                <p class="menu-card-desc">{{ item.description }}</p>
+                <div class="menu-card-footer">
+                    <span class="price">₹{{ item.price }}</span>
+                    <button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart({{ item.id }})">Add +</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Quick View Modal -->
+<div class="quick-view-modal" id="quickViewModal">
+    <button class="close-quick-view" onclick="closeQuickView()">&times;</button>
+    <div class="quick-view-content">
+        <img class="quick-view-image" id="quickViewImage" src="" alt="">
+        <div class="quick-view-details">
+            <h2 id="quickViewName"></h2>
+            <span class="category-badge" id="quickViewCategory"></span>
+            <div class="rating" id="quickViewRating" style="margin: 1rem 0;"></div>
+            <span class="price" id="quickViewPrice"></span>
+            <p id="quickViewDesc"></p>
+            <div class="quick-view-actions">
+                <div class="quantity-selector">
+                    <button class="quantity-btn" onclick="decreaseQty()">-</button>
+                    <span class="quantity-value" id="quantityValue">1</span>
+                    <button class="quantity-btn" onclick="increaseQty()">+</button>
+                </div>
+                <button class="add-to-cart-btn" id="quickViewAddBtn" onclick="addToCartFromQuickView()">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let currentQuickViewId = null;
+let currentQuantity = 1;
+
+function filterMenu(category) {
+    window.location.href = '/menu?category=' + category;
+}
+
+function openQuickView(id, name, price, description, image, rating, category) {
+    currentQuickViewId = id;
+    currentQuantity = 1;
+
+    document.getElementById('quickViewImage').src = image;
+    document.getElementById('quickViewName').textContent = name;
+    document.getElementById('quickViewPrice').textContent = '₹' + price;
+    document.getElementById('quickViewDesc').textContent = description;
+    document.getElementById('quickViewRating').textContent = '★ ' + rating;
+
+    const catBadge = document.getElementById('quickViewCategory');
+    catBadge.textContent = category;
+    catBadge.className = 'category-badge ' + category;
+
+    document.getElementById('quantityValue').textContent = '1';
+
+    document.getElementById('quickViewModal').classList.add('active');
+}
+
+function closeQuickView() {
+    document.getElementById('quickViewModal').classList.remove('active');
+}
+
+function increaseQty() {
+    currentQuantity++;
+    document.getElementById('quantityValue').textContent = currentQuantity;
+}
+
+function decreaseQty() {
+    if (currentQuantity > 1) {
+        currentQuantity--;
+        document.getElementById('quantityValue').textContent = currentQuantity;
+    }
+}
+
+function addToCartFromQuickView() {
+    if (currentQuickViewId) {
+        for (let i = 0; i < currentQuantity; i++) {
+            addToCart(currentQuickViewId);
+        }
+        closeQuickView();
+    }
+}
+
+// Close modal on outside click
+document.getElementById('quickViewModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeQuickView();
+    }
+});
+</script>
+{% endblock %}
